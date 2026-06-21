@@ -22,6 +22,6 @@
 
 ### 1. Клонирование репозитория
 
-```bash
+
 git clone https://github.com/matb22/sql-manager-tkinter.git
 cd people-manager
