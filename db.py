@@ -40,7 +40,7 @@ class myDB :
             print("Неверный пароль! Попробуйте сбросить пароль PostgreSQL командой:")
             print("sudo -u postgres psql -c \"ALTER USER postgres WITH PASSWORD 'новый_пароль';\"")
     finally:
-        if self.conn:  # <-- ТЕПЕРЬ conn определена даже при ошибке
+        if self.conn:  
             self.conn.close()
             print("Соединение закрыто.")
 
@@ -48,12 +48,12 @@ class myDB :
   def insertUser(self , name:str , information:str) :
     
     self._createDB()
-    # Подключаемся к НОВОЙ базе, а не к postgres
+    
     conn = psycopg2.connect(
         **self.config
     )
 
-    # Создаём таблицу
+    
     cursor = conn.cursor()
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
@@ -63,11 +63,11 @@ class myDB :
         )
     """)
 
-    # Вставляем данные
+    
     cursor.execute("INSERT INTO users (name, inf) VALUES (%s, %s)", 
                   (name, information))
 
-    # Сохраняем изменения
+   
     conn.commit()
 
   def deleteDB(self) :
@@ -77,10 +77,10 @@ class myDB :
 
     cursor = conn.cursor()
 
-    # Удалить таблицу
+    
     cursor.execute("DROP TABLE users;")
 
-    # Подтвердить изменения
+    
     conn.commit()
 
     print("Таблица удалена!")
@@ -147,10 +147,10 @@ class myDB :
 
     cursor = conn.cursor()
 
-    # Удалить таблицу
+    
     cursor.execute("DELETE FROM users WHERE id = %s", (user_id,))
 
-    # Подтвердить изменения
+    
     conn.commit()
 
     print("Пользователь удален!")
